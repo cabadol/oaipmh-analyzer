@@ -35,7 +35,7 @@ public class Visitor implements Runnable {
     private String server;
 
     private final File directory;
-    private final OAIPMHHttpClient httpClient;
+    private final OAIPMHHttpClient oaipmhClient;
     private CsvWriter writer;
     private URI uri;
 
@@ -47,7 +47,7 @@ public class Visitor implements Runnable {
         // Directory where save the report
         this.directory = directory;
         // Http Client
-        this.httpClient = new OAIPMHHttpClient();
+        this.oaipmhClient = new OAIPMHHttpClient();
         // Initialize Summary
         this.summary = new Summary();
 
@@ -90,7 +90,7 @@ public class Visitor implements Runnable {
     private void listRecords(ResumptionTokenType token) throws IOException, URISyntaxException, JAXBException {
 
         // request 'verb' to remote data provider
-        String responseXML = httpClient.doRequest(uri,"ListRecords",null,null,"oai_dc",token);
+        String responseXML = oaipmhClient.doRequest(uri,"ListRecords",null,null,"oai_dc",token);
 
         // build a java object from xml
         OAIPMHtype responseObject = OAIPMHConverter.xmlToOaipmh(responseXML);
